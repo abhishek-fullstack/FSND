@@ -66,7 +66,7 @@ def create_app(test_config=None):
                             'current_category': None})
 
     '''
-    Create an endpoint to handle GET requests
+    Endpoint to handle GET requests
     for all available categories.
     This endpoint should return list of categories
     and not of categories
@@ -126,7 +126,7 @@ def create_app(test_config=None):
             print(sys.exc_info())
             abort(422)
     '''
-    Create a GET endpoint to get questions based on category.
+    Endpoint to get questions based on category.
     On success, it returns list of questions under passed
     category, no of total questions and current category.
     '''
@@ -149,7 +149,7 @@ def create_app(test_config=None):
                                 'total_questions': len(formatted_questions),
                                 'current_category': category.type})
     '''
-    Create a POST endpoint to get questions based on a search term.
+    POST endpoint to get questions based on a search term.
     It should return any questions for whom the search term
     is a substring of the question.
     On success, it returns list of questions having that passed
@@ -171,7 +171,7 @@ def create_app(test_config=None):
                             'current_category': None})
 
     '''
-    Create a POST endpoint to get questions to play the quiz.
+    POST endpoint to get questions to play the quiz.
     This endpoint should take category and previous question parameters
     and return a random questions within the given category,
     if provided, and that is not one of the previous questions.
