@@ -68,24 +68,250 @@ One note before you delve into your tasks: for each endpoint you are expected to
 
 REVIEW_COMMENT
 ```
-This README is missing documentation of your endpoints. Below is an example for your endpoint to get all categories. Please use it as a reference for creating your documentation and resubmit your code. 
+General :
+1. This app is hosted locally  with base url as http://127.0.0.1:5000/
+2. No authentication required on this app
 
-Endpoints
-GET '/categories'
-GET ...
-POST ...
-DELETE ...
+Error handlers : Followwing error responses can be recived to users of API
+    400: bad request
+    404: resource not found
+    405: method not allowed
+    422: unprocessable
+    500: internal server error
 
 GET '/categories'
 - Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
 - Request Arguments: None
-- Returns: An object with a single key, categories, that contains a object of id: category_string key:value pairs. 
-{'1' : "Science",
-'2' : "Art",
-'3' : "Geography",
-'4' : "History",
-'5' : "Entertainment",
-'6' : "Sports"}
+- Returns: An object with keys, 
+    1. categories, a dictionary that contains key value pair, as category id vs category type
+    2. int:total_categories: an integer that contains number of categories        
+ - example: curl http://127.0.0.1:5000/categories -H "Content-Type: application/json"
+{
+  "categories": {
+    "0": "Science",
+    "1": "Art",
+    "2": "Geography",
+    "3": "History",
+    "4": "Entertainment",
+    "5": "Sports"
+  },
+  "success": "True",
+  "total_categories": 6
+}
+
+GET '/questions'
+- Fetches a dictionary of paginated questions
+- Request Arguments: Optionally we can provide page number, defaut value of page number is 1
+- Returns: An object with keys
+    1. categories: a list that contains category objects
+        -int:id: Category id.
+        -str:type: Category text.
+    2. questions: a list of question on the page, where each question object has below keys and values
+        int:id: id of the question.
+        str:question: question text.
+        str:answer: answer test.
+        int:difficulty: difficulty level.
+        int:category: id of qusestion's category
+    3. int:total_questions : number of total questions
+ - example: curl http://127.0.0.1:5000/questions?page=2 -H "Content-Type: application/json"
+{
+  "categories": [
+    {
+      "id": 0,
+      "type": "Science"
+    },
+    {
+      "id": 1,
+      "type": "Art"
+    },
+    {
+      "id": 2,
+      "type": "Geography"
+    },
+    {
+      "id": 3,
+      "type": "History"
+    },
+    {
+      "id": 4,
+      "type": "Entertainment"
+    },
+    {
+      "id": 5,
+      "type": "Sports"
+    }
+  ],
+  "current_category": null,
+  "questions": [
+    {
+      "answer": "Muhammad Ali",
+      "category": 3,
+      "difficulty": 1,
+      "id": 9,
+      "question": "What boxer's original name is Cassius Clay?"
+    },
+    {
+      "answer": "George Washington Carver",
+      "category": 3,
+      "difficulty": 2,
+      "id": 12,
+      "question": "Who invented Peanut Butter?"
+    },
+    {
+      "answer": "I am beboo bachcha my lord",
+      "category": 3,
+      "difficulty": 1,
+      "id": 24,
+      "question": "What was the answer of beboo bachha"
+    },
+    {
+      "answer": "Apollo 13",
+      "category": 4,
+      "difficulty": 4,
+      "id": 2,
+      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+    },
+    {
+      "answer": "Edward Scissorhands",
+      "category": 4,
+      "difficulty": 3,
+      "id": 6,
+      "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
+    },
+    {
+      "answer": "Uruguay",
+      "category": 5,
+      "difficulty": 4,
+      "id": 11,
+      "question": "Which country won the first ever soccer World Cup in 1930?"
+    },
+    {
+      "answer": "UP",
+      "category": 2,
+      "difficulty": 5,
+      "id": 26,
+      "question": "Nabinagar is in which state"
+    }
+  ],
+  "success": "True",
+  "total_questions": 17
+}
+
+
+DELETE '/questions/<int:question_id>'
+- deletes the question with the specified id in the URL
+- Request Arguments: None
+- Returns: An object with keys
+    1. question: object of deleted question which has below keys and values
+        int:id: id of the question.
+        str:question: question text.
+        str:answer: answer test.
+        int:difficulty: difficulty level.
+        int:category: id of qusestion's category
+ - example: curl -X DELETE http://127.0.0.1:5000/questions/9 -H "Content-Type: application/json"
+{
+  "question": {
+    "answer": "Muhammad Ali",
+    "category": 3,
+    "difficulty": 1,
+    "id": 9,
+    "question": "What boxer's original name is Cassius Clay?"
+  },
+  "success": "True"
+}
+
+
+GET '/categories/<int:category_id>/questions'
+- Gets a dictionary of questions, belonging to the specified category specified in URL parameter 
+- Request Arguments: None
+- Returns: dictionary that contains keys
+    1. string:current_category : name of the category supplied in request
+    2. questions: a list that contains questions objects, each having below key:value pairs.
+        int:id: id of the question.
+        str:question: question text.
+        str:answer: answer test.
+        int:difficulty: difficulty level.
+        int:category: id of qusestion's category
+    3. int:total_questions : number of total questions belonging to category supplied in request
+ - example: curl -X GET http://127.0.0.1:5000/categories/4/questions -H "Content-Type: application/json" 
+{
+  "current_category": "Entertainment",
+  "questions": [
+    {
+      "answer": "Apollo 13",
+      "category": 4,
+      "difficulty": 4,
+      "id": 2,
+      "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+    },
+    {
+      "answer": "Edward Scissorhands",
+      "category": 4,
+      "difficulty": 3,
+      "id": 6,
+      "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
+    }
+  ],
+  "success": "True",
+  "total_questions": 2
+}
+
+
+Post '/questions/search'
+- Searches for a question based on a string passed through request argument 
+- Request Arguments: Json Object
+    -str:searchTerm: string based on which questions will searched
+- Returns: dictionary that contains keys
+    1. questions: a list that contains questions which match to search, where each question has below key value pairs
+        int:id: id of the question.
+        str:question: question text.
+        str:answer: answer test.
+        int:difficulty: difficulty level.
+        int:category: id of qusestion's category
+    2. int:total_questions : number of total questions which match to the search
+ - example: curl -X POST http://127.0.0.1:5000/questions/search -H "Content-Type: application/json" -d '{"searchTerm": "Taj"}'
+{
+  "questions": [
+    {
+      "answer": "Agra",
+      "category": 2,
+      "difficulty": 2,
+      "id": 15,
+      "question": "The Taj Mahal is located in which Indian city?"
+    }
+  ],
+  "success": "True",
+  "total_questions": 1
+}
+
+
+Post '/quizzes'
+- Returns a random question, belonging to the supplied category id and other than having ids specified in request 
+- Request Arguments: Json Object cotaining below
+    1. previous_questions: list of previous question from the category
+    2. quiz_category: a dictionary that contains
+        -int:id: category id.
+        -str:type: type of category.
+- Returns: dictionary that contains key
+    1. question: a question object
+        int:id: id of the question.
+        str:question: question text.
+        str:answer: answer test.
+        int:difficulty: difficulty level.
+        int:category: id of qusestion's category
+ - example: curl -X POST http://127.0.0.1:5000/quizzes -H "Content-Type: application/json" -d '{"previous_questions": [14],
+                "quiz_category": {"type": "Geography", "id": '3'}}'
+{
+  "question": {
+    "answer": "Maya Angelou",
+    "category": 3,
+    "difficulty": 2,
+    "id": 5,
+    "question": "Whose autobiography is entitled 'I Know Why the Caged Bird Sings'?"
+  },
+  "success": "True"
+
+
 
 ```
 

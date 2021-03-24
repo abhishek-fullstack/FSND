@@ -1,6 +1,6 @@
 .vscode
 __pycache__
-trivia_env_1/
+trivia_env/
 
 /frontend/node_modules
 
