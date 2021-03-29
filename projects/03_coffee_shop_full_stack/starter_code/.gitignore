@@ -2,6 +2,12 @@ venv/
 .vscode/
 __pycache__/
 test.db
+backend/env
+ehthumbs.db
+Thumbs.db
+backend/src/helper_test.py
+backend/src/TES_TOKEN_2.PY
+backend/src/test_token.py
 
 # OS generated files #
 ######################
