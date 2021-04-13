@@ -1,6 +1,8 @@
 import os
 from flask import Flask
-from models import setup_db
+from .models import setup_db
+from flask_cors import CORS
+from .auth.auth import AuthError, requires_auth
 
 def create_app(test_config=None):
 
@@ -22,6 +24,6 @@ def create_app(test_config=None):
     return app
 
 app = create_app()
-
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=8080, debug=True)
+    
