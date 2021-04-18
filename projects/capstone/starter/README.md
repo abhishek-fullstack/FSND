@@ -1,14 +1,14 @@
-#### Motivation for the Casting Agency Project
+# Motivation for the Casting Agency Project
 The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies. You are an Executive Producer within the company and are creating a system to simplify and streamline your process.
 
 
 Follow instructions to install the latest version of python for your platform in the [python docs](https://docs.python.org/3/using/unix.html#getting-and-installing-the-latest-version-of-python)
 
-#### Virtual Environment
+## Virtual Environment
 
 We recommend working within a virtual environment whenever using Python for projects. This keeps your dependencies for each project separate and organized. Instructions for setting up a virtual environment for your platform can be found in the [python docs](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
 
-#### PIP Dependencies
+## PIP Dependencies
 
 Once you have your virtual environment setup and running, install dependencies by navigating to the `/backend` directory and running:
 
@@ -18,7 +18,7 @@ pip install -r requirements.txt
 
 This will install all of the required packages we selected within the `requirements.txt` file.
 
-##### Key Dependencies
+## Key Dependencies
 
 - [Flask](http://flask.pocoo.org/)  is a lightweight backend microservices framework. Flask is required to handle requests and responses.
 
@@ -38,6 +38,9 @@ From within the `starter` directory first ensure you are working using your crea
 
 To run the server, execute:
 
+1st setup the env
+source setup.sh
+
 ```bash
 export FLASK_APP=app.py
 export FLASK_ENV=development
@@ -49,14 +52,28 @@ Setting the `FLASK_ENV` variable to `development` will detect file changes and r
 Setting the `FLASK_APP` variable to `app.py` directs flask to use `app.py` file to find the application. 
 
 
-#### General :
-1. This app is hosted locally  with base url as http://127.0.0.1:5000/
-2. Authentication is required on this app
+# General :
+1. This app can be accessed as https://casting-agency-capfsnd.herokuapp.com
+2. This app can be run locally on http://127.0.0.1:5000
+3. Authentication is required on this app
+
+# Tips to use/retrive access tokens
+1. Acccess token which will will remain for valid for couple of hours are provided in setup.sh.
+2. These access token must be used in curl/postman requests to access end points. 
+3. Fresh access tokens can also be generated through further steps.
+4. Use https://casting-agency-capfsnd.herokuapp.com/authorization/url to receive a URL
+5. Uee the URL in respoonse for below users
+    a)User: ca_mac2957@gmail.com Password: mac_2957 Role: Casting Assistant
+    b)User: cd_mac2957@gmail.com Password: mac_2957 Role: Casting Director
+    c)User: ep_mac2957@gmail.com Password: mac_2957 Role: Executive Producer
+6. Access Token received in redirected URL for all three roles should be copied and used to access API endpoints.
+7. To deduce, which role can access which end points, please go through below details of roles, permissions and end points.
+8. Access Tokens can also be replaced in setup.sh, so that they can be used to run the test suite, detailed towards the end of this file.
 
 
-#### Role based access for the Casting Agency Project
+## Role based access for the Casting Agency Project
 
-All the application end poins support RBAC.
+All the application end points support RBAC except default and /authorization/url
 
 ## Roles:
     # Casting Assistant : 
@@ -92,13 +109,27 @@ All the application end poins support RBAC.
 
 
 
-##### Error handlers :
+## Error handlers :
 Followwing error responses can be recived to users of API
     400: bad request
     404: resource not found
     405: method not allowed
     422: unprocessable
     500: internal server error
+
+GET '/'
+- Used for health check, as to verify whether application is running
+- doesn't require any permission
+- Request Arguments: None
+- Returns: A string "Hello"
+- example: curl -X GET  https://casting-agency-capfsnd.herokuapp.com/
+
+GET '/authorization/url'
+- This is a helper method to provide custom url to login for users and generate reusable token
+- doesn't require any permission
+- Request Arguments: None
+- Returns: an object with key url and it's value
+- example: curl -X GET  https://casting-agency-capfsnd.herokuapp.com/authorization/url
 
 GET '/actors'
 - Fetches a list of actors
@@ -109,7 +140,7 @@ GET '/actors'
         int:id: id of the Actor.
         str:name: name of Actor
     2. int:total_actors: an integer that contains number of actors        
- - example: curl -X GET  http://127.0.0.1:5000/actors -H "Content-Type: application/json" -H "Authorization: Bearer {token}"
+ - example: curl -X GET  https://casting-agency-capfsnd.herokuapp.com/actors -H "Content-Type: application/json" -H "Authorization: Bearer {token}"
 {
   "actors": [
     {
@@ -148,7 +179,7 @@ GET '/actors/<int:actor_id>'
         str:name: name of movie.
         str:year: year, in which this movie was released.
 
- - example: curl -X GET  http://127.0.0.1:5000/actors/2 -H "Content-Type: application/json" -H "Authorization: Bearer {token}"
+ - example: curl -X GET  https://casting-agency-capfsnd.herokuapp.com/actors/2 -H "Content-Type: application/json" -H "Authorization: Bearer {token}"
 {
   "actor": {
     "date_of_birth": "Tue, 12 Oct 1965 00:00:00 GMT",
@@ -177,7 +208,7 @@ DELETE '/actors/<int:actor_id>'
 - Returns: An object deleted_actor which has below keys and values
     int:id: id of the actor.
     str:name: name of the actor.
- - example: curl -X DELETE  http://127.0.0.1:5000/actors/2 -H "Content-Type: application/json" -H "Authorization: Bearer {token}"
+ - example: curl -X DELETE  https://casting-agency-capfsnd.herokuapp.com/actors/2 -H "Content-Type: application/json" -H "Authorization: Bearer {token}"
 {
   "deleted_actor": {
     "id": 2,
@@ -198,7 +229,7 @@ POST '/actors'
 - Returns: An object created actor which has below keys and values
     int:id: id of the actor.
     str:name: name of the actor.
- - example: curl -X POST http://127.0.0.1:5000/actors -H "Content-Type: application/json" -H "Authorization: Bearer {token}" -d '{"name": "Pat cummins",   "nationality": "British","date_of_birth": "29-jun-1958"}'
+ - example: curl -X POST https://casting-agency-capfsnd.herokuapp.com/actors -H "Content-Type: application/json" -H "Authorization: Bearer {token}" -d '{"name": "Pat cummins",   "nationality": "British","date_of_birth": "29-jun-1958"}'
 {
   "created_actor": {
     "id": 5,
@@ -219,7 +250,7 @@ PATCH '/actors/<int:actor_id>'
 - Returns: An object updated_actor which has below keys and values 
     int:id: id of the actor.
     str:name: name of the actor.
- - example: curl -X PATCH http://127.0.0.1:5000/actors/5 -H "Content-Type: application/json" -H "Authorization: Bearer {token}" -d '{"name": "Pat cummins Sr","nationality": "British"}'
+ - example: curl -X PATCH https://casting-agency-capfsnd.herokuapp.com/actors/5 -H "Content-Type: application/json" -H "Authorization: Bearer {token}" -d '{"name": "Pat cummins Sr","nationality": "British"}'
 {
   "success": "True",        
   "updated_actor": {        
@@ -237,7 +268,7 @@ GET '/movies'
         int:id: id of the movie.
         str:name: name of movie
     2. int:total_movies: an integer that contains number of movies        
- - example: curl -X GET  http://127.0.0.1:5000/movies -H "Content-Type: application/json" -H "Authorization: Bearer {token}"
+ - example: curl -X GET  https://casting-agency-capfsnd.herokuapp.com/movies -H "Content-Type: application/json" -H "Authorization: Bearer {token}"
 {
   "movies": [
     {
@@ -270,7 +301,7 @@ GET '/movies/<int:movie_id>'
     actors: list of actors, who have acted in the movie where each actor object has below keys
         int:id: id of the actor.
         str:name: name of actor.
- - curl -X GET  http://127.0.0.1:5000/movies/1 -H "Content-Type: application/json" -H "Authorization: Bearer {token}"
+ - curl -X GET  https://casting-agency-capfsnd.herokuapp.com/movies/1 -H "Content-Type: application/json" -H "Authorization: Bearer {token}"
 {
   "movie": {
     "actors": [
@@ -300,7 +331,7 @@ DELETE '/movies/<int:actor_id>'
     int:id: id of the movie.
     str:name: name of the movie.
     int:year: year in which this movie was released
- - example: curl -X DELETE  http://127.0.0.1:5000/movies/1 -H "Content-Type: application/json" -H "Authorization: Bearer {token}"
+ - example: curl -X DELETE  https://casting-agency-capfsnd.herokuapp.com/movies/1 -H "Content-Type: application/json" -H "Authorization: Bearer {token}"
 {
   "deleted_movie": {
     "id": 1,
@@ -326,7 +357,7 @@ POST '/movies'
     int:id: id of the movie.
     str:name: name of the movie
     int:year: release year of the movie
- - example: curl -X POST http://127.0.0.1:5000/movies -H "Content-Type: application/json" -H "Authorization: Bearer {token}" -d '{"name": "Yet To Be Announced","genre": "Western","language": "French","year": "2022","imdb_rating": "0","actors":[5] }'
+ - example: curl -X POST https://casting-agency-capfsnd.herokuapp.com/movies -H "Content-Type: application/json" -H "Authorization: Bearer {token}" -d '{"name": "Yet To Be Announced","genre": "Western","language": "French","year": "2022","imdb_rating": "0","actors":[1] }'
 {
   "created_movie": {
     "id": 4,
@@ -351,7 +382,7 @@ PATCH '/movies/<int:movie_id>'
     int:id: id of the movie.
     str:name: name of the movie.
     int:year: release year of the movie.
- - example: curl -X PATCH  http://127.0.0.1:5000/movies/4 -H "Content-Type: application/json" -H "Authorization: Bearer {token}" -d '{"name": "the unknown" }'
+ - example: curl -X PATCH  https://casting-agency-capfsnd.herokuapp.com/movies/4 -H "Content-Type: application/json" -H "Authorization: Bearer {token}" -d '{"name": "the unknown" }'
 {
   "success": "True",
   "updated_movie": {
@@ -365,7 +396,8 @@ PATCH '/movies/<int:movie_id>'
 
 To run the tests, run
 
-dropdb casting_test
-createdb casting_test
-psql casting_test < casting_backup.psql
-python test_app.py
+1. source setup.sh
+2. dropdb casting_test
+3. createdb casting_test
+4. psql casting_test < casting_backup.psql
+5. python test_app.py
