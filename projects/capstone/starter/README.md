@@ -1,16 +1,16 @@
 # Motivation for the Casting Agency Project
-The Casting Agency models a company that is responsible for creating movies and managing and assigning actors to those movies. You are an Executive Producer within the company and are creating a system to simplify and streamline your process.
+The Casting Agency is a thriving business for creating movies and managing and assigning actors to those movies. We are within the company and are creating a system to simplify and streamline this process.
 
 
-Follow instructions to install the latest version of python for your platform in the [python docs](https://docs.python.org/3/using/unix.html#getting-and-installing-the-latest-version-of-python)
+Follow instructions to install the latest version of python for platform in the [python docs](https://docs.python.org/3/using/unix.html#getting-and-installing-the-latest-version-of-python)
 
 ## Virtual Environment
 
-We recommend working within a virtual environment whenever using Python for projects. This keeps your dependencies for each project separate and organized. Instructions for setting up a virtual environment for your platform can be found in the [python docs](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
+We recommend working within a virtual environment whenever using Python for projects. This keeps dependencies for each project separate and organized. Instructions for setting up a virtual environment for platform can be found in the [python docs](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
 
 ## PIP Dependencies
 
-Once you have your virtual environment setup and running, install dependencies by navigating to the `/backend` directory and running:
+Once we have virtual environment setup and running, install dependencies by navigating to the `/backend` directory and running:
 
 ```bash
 pip install -r requirements.txt
@@ -34,7 +34,7 @@ psql casting < casting_backup.psql
 
 ## Running the server
 
-From within the `starter` directory first ensure you are working using your created virtual environment.
+From within the `starter` directory first ensure we are working using our created virtual environment.
 
 To run the server, execute:
 
@@ -57,12 +57,12 @@ Setting the `FLASK_APP` variable to `app.py` directs flask to use `app.py` file 
 2. This app can be run locally on http://127.0.0.1:5000
 3. Authentication is required on this app
 
-# Tips to use/retrive access tokens
-1. Acccess token which will will remain for valid for couple of hours are provided in setup.sh.
-2. These access token must be used in curl/postman requests to access end points. 
+# Important tips to use/retrive access tokens
+1. Access token which will remain valid for couple of hours, from the submission of this project, are provided in setup.sh.
+2. These access tokens must be used in curl/postman requests to access end points. 
 3. Fresh access tokens can also be generated through further steps.
 4. Use https://casting-agency-capfsnd.herokuapp.com/authorization/url to receive a URL
-5. Uee the URL in respoonse for below users
+5. Use the URL in response for below users
     a)User: ca_mac2957@gmail.com Password: mac_2957 Role: Casting Assistant
     b)User: cd_mac2957@gmail.com Password: mac_2957 Role: Casting Director
     c)User: ep_mac2957@gmail.com Password: mac_2957 Role: Executive Producer
