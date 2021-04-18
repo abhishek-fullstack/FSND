@@ -1,7 +1,6 @@
 import os
 from sqlalchemy import Column, String, Integer, Date, Float, create_engine
 from flask_sqlalchemy import SQLAlchemy
-import json
 
 database_path = os.environ['DATABASE_URL']
 
